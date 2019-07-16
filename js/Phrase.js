@@ -8,13 +8,21 @@
     }
 
     addPhraseToDisplay() {
-        const ul = document.querySelector('#phrase ul');
+        const ul = document.querySelector('ul');
 
-        [...this.phrase].forEach((letter) => {
-
-
-
+        [...this.phrase].forEach((character) => {
+        //this.phrase.split('').forEach((character) => {  // both work
+            const li = document.createElement('li');
+            ul.append(li);
+            if(character === ' ') {
+                li.classList.add('space');
+                li.innerHTML = ' ';
+            } else {
+                li.classList.add('hide', 'letter', `${character}`);
+                li.innerHTML = character;
+            }
         })
+
 
     //     /**
     //      * this adds letter placeholders to the display when the game starts. 
