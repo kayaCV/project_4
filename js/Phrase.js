@@ -7,19 +7,19 @@
         this.phrase = phrase.toLowerCase();
     }
 
-    addPhraseToDisplay() {
+    addPhraseToDisplay() {      // Adds letter placeholders to the display when the game starts
         const ul = document.querySelector('ul');
 
         [...this.phrase].forEach((character) => {
         //this.phrase.split('').forEach((character) => {  // both work
-            const li = document.createElement('li');
-            ul.append(li);
+            const liLetters = document.createElement('li');
+            ul.append(liLetters);
             if(character === ' ') {
-                li.classList.add('space');
-                li.innerHTML = ' ';
+                liLetters.classList.add('space');
+                liLetters.innerHTML = ' ';
             } else {
-                li.classList.add('hide', 'letter', `${character}`);
-                li.innerHTML = character;
+                liLetters.classList.add('letter', `${character}`); // 'hide', 
+                liLetters.innerHTML = character;
             }
         })
 
@@ -37,22 +37,30 @@
 
     }
 
-    // checkLetter() {
-    //     /**
-    //      * checks to see if the letter selected by the player matches a letter in the phrase.
-    //      * return true or false
-    //      */
+    checkLetter(letter) {       // Check if letter entered imatches a letter in the phrase
+        return this.phrase.indexOf(letter) > -1;
+        /**
+         * checks to see if the letter selected by the player matches a letter in the phrase.
+         * return true or false
+         */
 
-    // }
+    }
 
-    // showMatchedLetter() {
-    //     /**
-    //      * reveals the letter(s) on the board that matches the player's selection. 
-    //      * To reveal the matching letter(s), select all of the letter DOM elements 
-    //      * that have a CSS class name that matches the selected letter and replace 
-    //      * each selected element's hide CSS class with the show CSS class.
-    //      */
+    showMatchedLetter(letter) {        // Display matched letter
+        let matchedLetters = [];
+        matchedLetters = document.querySelectorAll(`.${letter}`);
 
-    // }
+        for (let letters of matchedLetters) {
+            letters.classList.add('show');
+            letters.classList.remove('hide');
+        }
+        /**
+         * reveals the letter(s) on the board that matches the player's selection. 
+         * To reveal the matching letter(s), select all of the letter DOM elements 
+         * that have a CSS class name that matches the selected letter and replace 
+         * each selected element's hide CSS class with the show CSS class.
+         */
+
+    }
 
  }

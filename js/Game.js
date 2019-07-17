@@ -6,52 +6,65 @@
     constructor() {
         this.missed = 0
         this.phrases = [
-            {phrase: 'it could be worse'}, 
-            {phrase: 'it takes two to tango'}, 
-            {phrase: 'your guess is as good as mine'}, 
-            {phrase: 'actions speak louder than words'}, 
-            {phrase: 'Back to the drawing board'}];
+            // {phrase: 'It could be worse'}, 
+            // {phrase: 'It takes two to tango'}, 
+            // {phrase: 'Your guess is as good as mine'}, 
+            // {phrase: 'Actions speak louder than words'}, 
+            // {phrase: 'Back to the drawing board'}
+            new Phrase('It could be worse'),
+            new Phrase('It takes two to tango'),
+            new Phrase('Your guess is as good as mine'),
+            new Phrase('Actions speak louder than words'),
+            new Phrase('Back to the drawing board')
+        
+        ];
         this.activePhrase = null;
     }
 
-    startGame() {
-
-
-
-/*
-The `startGame()` method hides the start screen overlay (the `div` element with an `id` of
-`overlay`), calls the `getRandomPhrase()` method to select a Phrase object from the Game
-object’s array of phrases, and then adds the phrase to the gameboard by calling the
-`addPhraseToDisplay()` method (which is a method on the Phrase class) on the selected Phrase
-object. The selected phrase should be stored in the Game’s `activePhrase` property, so it can be
-easily accessed throughout the game.
- */
-
+    startGame() {   // Displays game board and phrase
+        document.querySelector('#overlay').style.display = 'none';
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
+        //return phrase;
     }
 
-    getRandomPhrase() {  // Selects and return a random phrase from phrases property
+    getRandomPhrase() {     // Selects and return a random phrase from this.phrases
         return this.phrases[Math.floor(Math.random() * this.phrases.length)];
     }
 
-    // handleInteraction() {
+    handleInteraction() {
+        
+        
+        /**
+         * capture letter entered
+         * check if captured letter match any in phrase
+         * if true,
+         *      display letter
+         * else
+         *      remove life from screen board
+         * 
+         */
 
 
-    // }
+    }
 
     // removeLife() {
 
 
     // }
 
-    // checkForWin() {
+    checkForWin() {
+        /**
+         * if() {
+         * 
+         * }
+         */
 
 
-    // }
+    }
 
-    // gameOver() {
+    // gameOver(gameWon) {
 
 
     // }
  }
-
- // 'it could be worse', 'it takes two to tango', 'your guess is as good as mine', 'actions speak louder than words', 'Back to the drawing board'
