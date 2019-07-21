@@ -17,9 +17,9 @@ class Game {
 
     startGame() {   // Displays game board and phrase
 
-        document.querySelector('#overlay').style.display = 'none';
-        this.activePhrase = this.getRandomPhrase();
-        this.activePhrase.addPhraseToDisplay();
+        document.querySelector('#overlay').style.display = 'none';      // Display game board
+        this.activePhrase = this.getRandomPhrase();                     // Get random phrase form phrase
+        this.activePhrase.addPhraseToDisplay();                         // Display random phrase to screen
     }
 
     getRandomPhrase() {     // Selects and return a random phrase from this.phrases
@@ -30,14 +30,14 @@ class Game {
         button.disabled = true;     // disable the key clicked
 
         // Checks if letter entered is in phrase
-        if(this.activePhrase.checkLetter(button.textContent)) { // If true, show letters.
+        if(this.activePhrase.checkLetter(button.textContent)) {     // If true, show letters.
             this.activePhrase.showMatchedLetter(button.textContent);
             button.classList.add(`chosen`);
-            if(this.checkForWin()) {            // if all letters guessed, Game Over.
+            if(this.checkForWin()) {                                // if all letters guessed, Game Over.
                 this.gameOver()
             }
         } else {
-            button.classList.add(`wrong`);      // If false, remove life.
+            button.classList.add(`wrong`);                           // If false, remove life.
             this.removeLife();
             this.checkForWin();
         }
@@ -47,7 +47,7 @@ class Game {
         document.querySelectorAll('img')[this.missed].src = 'images/lostHeart.png';
         this.missed += 1;
 
-        if(this.missed === 5) {                 // if missed five times, game is over
+        if(this.missed === 5) {                         // if missed five times, game is over
             this.gameOver();
         } 
     }
@@ -66,20 +66,21 @@ class Game {
         overlay.style.display = '';
         let gameOverMsg = document.querySelector('#game-over-message');
         if(this.checkForWin() === true) {
-            gameOverMsg.textContent = 'Winner Winner!!';
+            gameOverMsg.textContent = 'Victory is yours!';
+            overlay.classList.remove('lose');
             overlay.classList.add('win');
         } else {
-            gameOverMsg.textContent = "Loooooseeeerrrr!!";
+            gameOverMsg.textContent = "Try again!";
+            overlay.classList.remove('win');
             overlay.classList.add('lose');
         }
         this.resetGame();
 
     }
     resetGame() {       // Reset the gameboard
-        const ul = document.querySelector('ul');
         let li = [];
         li = document.querySelectorAll('.letter');
-        li.forEach(l => l.parentNode.removeChild(l));       // Remove previous phase from gameboard
+        li.forEach(l => l.parentNode.removeChild(l));       // Remove previous phrase from gameboard
         let keys = [];
         keys = document.querySelectorAll('.key');
 
