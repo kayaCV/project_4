@@ -88,6 +88,7 @@ class Game {
             key.className = "key";
         });
 
+        let image = [];
         image = document.querySelectorAll('img');
         image.forEach(img => img.src= 'images/liveHeart.png')   // Restore life
 
