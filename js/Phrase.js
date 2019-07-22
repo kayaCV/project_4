@@ -11,8 +11,7 @@
         const ul = document.querySelector('ul');
 
         [...this.phrase].forEach((character) => {
-        //this.phrase.split('').forEach((character) => {  // both work
-            const liLetters = document.createElement('li');
+            const liLetters = document.createElement('li');     // Create li for each letter in phrase
             ul.append(liLetters);
             if(character === ' ') {
                 liLetters.classList.add('space');
@@ -33,7 +32,6 @@
         matchedLetters = document.querySelectorAll(`.${letter}`);
 
         matchedLetters.forEach(letters => {
-        // for (let letters of matchedLetters) { also works
             letters.classList.add('show');
             letters.classList.remove('hide');
         }

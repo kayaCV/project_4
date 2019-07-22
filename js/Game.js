@@ -5,12 +5,12 @@
 class Game {
     constructor() {
         this.missed = 0
-        this.phrases = [            // Phrases
-            new Phrase('It could be worse'),
-            new Phrase('It takes two to tango'),
-            new Phrase('Your guess is as good as mine'),
-            new Phrase('Actions speak louder than words'),
-            new Phrase('Back to the drawing board')
+        this.phrases = [                                                // Phrases to be displayed on game board
+            new Phrase('Roll up'),
+            new Phrase('Aint nobody got time for that'),
+            new Phrase('Bye Felicia'),
+            new Phrase('Puff puff pass'),
+            new Phrase('May the fourth be with you')
         ];
         this.activePhrase = null;
     }
@@ -22,7 +22,7 @@ class Game {
         this.activePhrase.addPhraseToDisplay();                         // Display random phrase to screen
     }
 
-    getRandomPhrase() {     // Selects and return a random phrase from this.phrases
+    getRandomPhrase() {          // Selects and return a random phrase from this.phrases
         return this.phrases[Math.floor(Math.random() * this.phrases.length)];
     }
 
@@ -32,28 +32,32 @@ class Game {
         // Checks if letter entered is in phrase
         if(this.activePhrase.checkLetter(button.textContent)) {     // If true, show letters.
             this.activePhrase.showMatchedLetter(button.textContent);
-            button.classList.add(`chosen`);
-            if(this.checkForWin()) {                                // if all letters guessed, Game Over.
+            button.classList.add('chosen', 'animated', 'rotateIn'); // EXTRA CREDIT: Add animation to key pressed
+            if(this.checkForWin()) {                                // If all letters guessed, Game Over.
                 this.gameOver()
             }
-        } else {
-            button.classList.add(`wrong`);                           // If false, remove life.
+        } else {                    // If false, remove life.
+            button.classList.add('wrong', 'animated', 'shake');     // EXTRA CREDIT: Add animation to key pressed
             this.removeLife();
             this.checkForWin();
         }
     }
 
-    removeLife() {                                       // Replace blue hearts with gray hearts when missed
-        document.querySelectorAll('img')[this.missed].src = 'images/lostHeart.png';
+    removeLife() {    
+        // this.missed += 1;                                       // Replace blue hearts with gray hearts when missed
+        let images = [];
+        images = document.querySelectorAll('img');
+        images[this.missed].classList.add("animated", "jello");    // EXTRA CREDIT: Add special effect to removed heart
+        images[this.missed].src = 'images/lostHeart.png';       
         this.missed += 1;
-
-        if(this.missed === 5) {                         // if missed five times, game is over
+        //console.log(this.missed)
+        if(this.missed === 5) {                                 // If missed five times, game is over and special efects removed
             this.gameOver();
+            //images.forEach(img => img.classList.remove("animated", "jello"));   
         } 
     }
 
-    checkForWin() {  // Checkss to see if all letters in phrase have been found
-        //if(document.querySelectorAll('.show').length === document.querySelectorAll('.letter').length) {  // also works
+    checkForWin() {                         // Checks to see if all letters in phrase have been found
         if(document.querySelectorAll('.hide').length === 0) {
             return true;
         } else {
@@ -61,16 +65,18 @@ class Game {
         }
     }
 
-    gameOver() {        // Displays "win" or "loss" message
+    gameOver() {                                                 // Displays "win" or "loss" message
         const overlay = document.querySelector('#overlay');
-        overlay.style.display = '';
+        overlay.style.display = '';                              //  Show overlay
         let gameOverMsg = document.querySelector('#game-over-message');
-        if(this.checkForWin() === true) {
+        if(this.checkForWin() === true) {  
+            gameOverMsg.classList.add("animated", "flash");                // If game is won, display winning message
             gameOverMsg.textContent = 'Victory is yours!';
             overlay.classList.remove('lose');
             overlay.classList.add('win');
-        } else {
-            gameOverMsg.textContent = "Try again!";
+        } else {      
+            gameOverMsg.classList.add("animated", "pulse");          // If game is lost, display losing message
+            gameOverMsg.textContent = "Try again!";         
             overlay.classList.remove('win');
             overlay.classList.add('lose');
         }
@@ -80,19 +86,23 @@ class Game {
     resetGame() {       // Reset the gameboard
         let li = [];
         li = document.querySelectorAll('.letter');
-        li.forEach(l => l.parentNode.removeChild(l));       // Remove previous phrase from gameboard
+        li.forEach(l => l.parentNode.removeChild(l));       // Remove phrase placeholders from gameboard
         let keys = [];
         keys = document.querySelectorAll('.key');
 
-        keys.forEach(key => {                               // enable keys
+        keys.forEach(key => {                               // Enable all keys
             key.removeAttribute("disabled");
+            key.classList.remove("animated", "rotateIn", 'shake'); 
             key.className = "key";
         });
 
         let image = [];
         image = document.querySelectorAll('img');
-        image.forEach(img => img.src= 'images/liveHeart.png')   // Restore life
+        image.forEach(img => {
+            img.src= 'images/liveHeart.png';                   // Restore hearts
+            img.classList.remove("animated", "jello");         // Remove animation class from hearts
+        });   
 
-        this.activePhrase = null;           // Remove previous phrase
+        this.activePhrase = null;                               // Remove previous phrase
     }
 }
