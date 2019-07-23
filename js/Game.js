@@ -4,13 +4,13 @@
 
 class Game {
     constructor() {
-        this.missed = 0
+        this.missed = 0;
         this.phrases = [                                                // Phrases to be displayed on game board
-            new Phrase('Roll up'),
-            new Phrase('Aint nobody got time for that'),
-            new Phrase('Bye Felicia'),
-            new Phrase('Puff puff pass'),
-            new Phrase('May the fourth be with you')
+            new Phrase('A bird in the hand is worth two in the bush'),
+            new Phrase('Honk if you love peace and quiet'),
+            new Phrase('Through the eye of a needle'),
+            new Phrase('Mad as a hatter'),
+            new Phrase('It’s raining cats and dogs')
         ];
         this.activePhrase = null;
     }
@@ -18,7 +18,7 @@ class Game {
     startGame() {   // Displays game board and phrase
 
         document.querySelector('#overlay').style.display = 'none';      // Display game board
-        this.activePhrase = this.getRandomPhrase();                     // Get random phrase form phrase
+        this.activePhrase = this.getRandomPhrase();                     // Get random phrase form phrases
         this.activePhrase.addPhraseToDisplay();                         // Display random phrase to screen
     }
 
@@ -32,28 +32,25 @@ class Game {
         // Checks if letter entered is in phrase
         if(this.activePhrase.checkLetter(button.textContent)) {     // If true, show letters.
             this.activePhrase.showMatchedLetter(button.textContent);
-            button.classList.add('chosen', 'animated', 'rotateIn'); // EXTRA CREDIT: Add animation to key pressed
+            button.classList.add('chosen', 'animated', 'rotateIn'); // EXTRA CREDIT: Add animation to correct key pressed
             if(this.checkForWin()) {                                // If all letters guessed, Game Over.
                 this.gameOver()
             }
         } else {                    // If false, remove life.
-            button.classList.add('wrong', 'animated', 'shake');     // EXTRA CREDIT: Add animation to key pressed
+            button.classList.add('wrong', 'animated', 'shake');     // EXTRA CREDIT: Add animation to wrong key pressed
             this.removeLife();
             this.checkForWin();
         }
     }
 
-    removeLife() {    
-        // this.missed += 1;                                       // Replace blue hearts with gray hearts when missed
+    removeLife() {    // Remove life when incorrect letter entered
         let images = [];
         images = document.querySelectorAll('img');
-        images[this.missed].classList.add("animated", "jello");    // EXTRA CREDIT: Add special effect to removed heart
-        images[this.missed].src = 'images/lostHeart.png';       
-        this.missed += 1;
-        //console.log(this.missed)
+        images[this.missed].classList.add("animated", "jello");    // EXTRA CREDIT: Add animation to removed heart
+        images[this.missed].src = 'images/lostHeart.png';   
+        this.missed += 1;                                       // Replace blue hearts with gray hearts when missed    
         if(this.missed === 5) {                                 // If missed five times, game is over and special efects removed
-            this.gameOver();
-            //images.forEach(img => img.classList.remove("animated", "jello"));   
+            this.gameOver();   
         } 
     }
 
@@ -67,7 +64,7 @@ class Game {
 
     gameOver() {                                                 // Displays "win" or "loss" message
         const overlay = document.querySelector('#overlay');
-        overlay.style.display = '';                              //  Show overlay
+        overlay.style.display = '';                              //  Show overlay, hide game board
         let gameOverMsg = document.querySelector('#game-over-message');
         if(this.checkForWin() === true) {  
             gameOverMsg.classList.add("animated", "flash");                // If game is won, display winning message
@@ -75,8 +72,10 @@ class Game {
             overlay.classList.remove('lose');
             overlay.classList.add('win');
         } else {      
-            gameOverMsg.classList.add("animated", "pulse");          // If game is lost, display losing message
-            gameOverMsg.textContent = "Try again!";         
+            gameOverMsg.classList.add("animated", "pulse");                      // If game is lost, display losing message
+            gameOverMsg.innerHTML = "Sorry! Correct answer is:" + 
+                `<p>${this.activePhrase.phrase.charAt(0).toUpperCase() +        // EXTRA CREDIT: Display correct phrase
+                    this.activePhrase.phrase.slice(1)}</p>`;        
             overlay.classList.remove('win');
             overlay.classList.add('lose');
         }
@@ -87,9 +86,9 @@ class Game {
         let li = [];
         li = document.querySelectorAll('.letter');
         li.forEach(l => l.parentNode.removeChild(l));       // Remove phrase placeholders from gameboard
+
         let keys = [];
         keys = document.querySelectorAll('.key');
-
         keys.forEach(key => {                               // Enable all keys
             key.removeAttribute("disabled");
             key.classList.remove("animated", "rotateIn", 'shake'); 

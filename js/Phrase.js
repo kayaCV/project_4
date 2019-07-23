@@ -17,7 +17,7 @@
                 liLetters.classList.add('space');
                 liLetters.innerHTML = ' ';
             } else {
-                liLetters.classList.add('hide', 'letter', `${character}`);
+                liLetters.classList.add('hide', 'letter', `${character}`, 'animated', 'bounceIn');  //  EXTRA CREDIT: add animation to phrase placeholders
                 liLetters.innerHTML = character;
             }
         })
@@ -35,7 +35,5 @@
             letters.classList.add('show');
             letters.classList.remove('hide');
         }
-
     )}
-
  }

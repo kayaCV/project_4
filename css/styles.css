@@ -202,3 +202,8 @@ button {
 .lose a {
   color: var(--color-lose);
 }
+
+/* EXTRA CREDIT: Start button highlights when mouse hovers over it */
+#btn__reset:hover {
+  border: 3px solid #4ac0d5;
+}
