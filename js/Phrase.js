@@ -9,7 +9,6 @@
 
     addPhraseToDisplay() {      // Adds letter placeholders to the display when the game starts
         const ul = document.querySelector('ul');
-
         [...this.phrase].forEach((character) => {
             const liLetters = document.createElement('li');     // Create li for each letter in phrase
             ul.append(liLetters);

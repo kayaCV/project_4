@@ -10,7 +10,7 @@ class Game {
             new Phrase('Honk if you love peace and quiet'),
             new Phrase('Through the eye of a needle'),
             new Phrase('Mad as a hatter'),
-            new Phrase('It’s raining cats and dogs')
+            new Phrase('It is raining cats and dogs')
         ];
         this.activePhrase = null;
     }
@@ -85,7 +85,10 @@ class Game {
     resetGame() {       // Reset the gameboard
         let li = [];
         li = document.querySelectorAll('.letter');
+        let spaces = [];
+        spaces = document.querySelectorAll('.space');
         li.forEach(l => l.parentNode.removeChild(l));       // Remove phrase placeholders from gameboard
+        spaces.forEach(space => space.parentNode.removeChild(space));       // Remove space from gameboard
 
         let keys = [];
         keys = document.querySelectorAll('.key');
